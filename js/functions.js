@@ -8,7 +8,7 @@ checkStringLength('привет', 2);
 const isPalindrome = (str) => {
   const noGapString = str.replaceAll(' ', '');
   const reverseString = noGapString.split('').reverse().join('');
-  return (noGapString.toLowerCase() === reverseString.toLowerCase());
+  return noGapString.toLowerCase() === reverseString.toLowerCase();
 };
 
 isPalindrome('А роза упала на лапу Азора');
