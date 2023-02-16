@@ -6,9 +6,9 @@ checkStringLength('привет', 2);
 // Функция для проверки, является ли строка палиндромом.
 
 const isPalindrome = (str) => {
-  const noGapString = str.replaceAll(' ', '');
+  const noGapString = str.replaceAll(' ', '').toLowerCase();
   const reverseString = noGapString.split('').reverse().join('');
-  return noGapString.toLowerCase() === reverseString.toLowerCase();
+  return noGapString === reverseString;
 };
 
 isPalindrome('А роза упала на лапу Азора');
