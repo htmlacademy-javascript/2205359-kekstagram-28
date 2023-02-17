@@ -51,7 +51,7 @@ const padString = (str, min, additionalChar) => {
     if (lack === 1) {
       return `${additionalChar[0]}${additionalChar}${str}`;
     }
-    let charRepeat = additionalChar.repeat(lack);
+    let charRepeat = additionalChar.repeat(lack + 1);
     if (str.length + charRepeat.length > min) {
       charRepeat = overflowTrim(str, charRepeat, min);
     }
