@@ -29,14 +29,40 @@ const DESCRIPTIONS = [
   'Коротко о том, как прошел мой день',
 ];
 
-const getRandomInt = (min, max) => Math.round(Math.random() * (max - min) + min);
+const getRandomInt = (min, max) => {
+  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
+  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+
+  return Math.floor(result);
+};
+
+function createRandomIdFromRangeGenerator (min, max) {
+  const previousValues = [];
+
+  return function () {
+    let currentValue = getRandomInt(min, max);
+    if (previousValues.length >= (max - min + 1)) {
+      return null;
+    }
+    while (previousValues.includes(currentValue)) {
+      currentValue = getRandomInt(min, max);
+    }
+    previousValues.push(currentValue);
+    return currentValue;
+  };
+}
+
+const generateUserId = createRandomIdFromRangeGenerator(1, 25);
+const generatePhotoId = createRandomIdFromRangeGenerator(1, 25);
+const generateCommentId = createRandomIdFromRangeGenerator(40, 200);
 
 const createComments = () => {
   const newComments = [];
   const commentsNumber = getRandomInt(6, 15);
   for (let i = 1; i <= commentsNumber; i++) {
     const newComment = {};
-    newComment.id = i + getRandomInt(50, 200);
+    newComment.id = generateCommentId();
     newComment.avatar = `img/avatar-${getRandomInt(1, 6)}.svg`;
     newComment.message = MESSAGES[getRandomInt(0, MESSAGES.length - 1)];
     newComment.name = NAMES[getRandomInt(0, NAMES.length - 1)];
@@ -49,10 +75,10 @@ const createDescriptions = () => {
   const photoDescriptions = [];
   for (let i = 1; i <= 25; i++) {
     const newObj = {};
-    newObj.id = i;
-    newObj.url = `photos/${i}.jpg`;
+    newObj.id = generateUserId();
+    newObj.url = `photos/${generatePhotoId()}.jpg`;
     newObj.description = DESCRIPTIONS[getRandomInt(0, DESCRIPTIONS.length - 1)];
-    newObj.likes = getRandomInt(15, 200);
+    newObj.likes = getRandomInt(1, 200);
     newObj.comments = createComments();
     photoDescriptions.push(newObj);
   }
