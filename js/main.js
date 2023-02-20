@@ -1,3 +1,15 @@
+const USERS_AMOUNT = 25;
+const MIN_ID = 1;
+const MAX_ID = 25;
+const MIN_COMMENT_ID = 40;
+const MAX_COMMENT_ID = 200;
+const MIN_COMMENTS_NUMBER = 5;
+const MAX_COMMENTS_NUMBER = 15;
+const MIN_AVATAR_ID = 1;
+const MAX_AVATAR_ID = 6;
+const MIN_LIKES = 1;
+const MAX_LIKES = 200;
+
 const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -53,17 +65,17 @@ function createRandomIdFromRangeGenerator (min, max) {
   };
 }
 
-const generateUserId = createRandomIdFromRangeGenerator(1, 25);
-const generatePhotoId = createRandomIdFromRangeGenerator(1, 25);
-const generateCommentId = createRandomIdFromRangeGenerator(40, 200);
+const generateUserId = createRandomIdFromRangeGenerator(MIN_ID, MAX_ID);
+const generatePhotoId = createRandomIdFromRangeGenerator(MIN_ID, MAX_ID);
+const generateCommentId = createRandomIdFromRangeGenerator(MIN_COMMENT_ID, MAX_COMMENT_ID);
 
 const createComments = () => {
   const newComments = [];
-  const commentsNumber = getRandomInt(6, 15);
+  const commentsNumber = getRandomInt(MIN_COMMENTS_NUMBER, MAX_COMMENTS_NUMBER);
   for (let i = 1; i <= commentsNumber; i++) {
     const newComment = {};
     newComment.id = generateCommentId();
-    newComment.avatar = `img/avatar-${getRandomInt(1, 6)}.svg`;
+    newComment.avatar = `img/avatar-${getRandomInt(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`;
     newComment.message = MESSAGES[getRandomInt(0, MESSAGES.length - 1)];
     newComment.name = NAMES[getRandomInt(0, NAMES.length - 1)];
     newComments.push(newComment);
@@ -73,12 +85,12 @@ const createComments = () => {
 
 const createDescriptions = () => {
   const photoDescriptions = [];
-  for (let i = 1; i <= 25; i++) {
+  for (let i = 1; i <= USERS_AMOUNT; i++) {
     const newObj = {};
     newObj.id = generateUserId();
     newObj.url = `photos/${generatePhotoId()}.jpg`;
     newObj.description = DESCRIPTIONS[getRandomInt(0, DESCRIPTIONS.length - 1)];
-    newObj.likes = getRandomInt(1, 200);
+    newObj.likes = getRandomInt(MIN_LIKES, MAX_LIKES);
     newObj.comments = createComments();
     photoDescriptions.push(newObj);
   }
