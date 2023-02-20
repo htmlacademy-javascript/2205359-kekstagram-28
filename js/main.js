@@ -49,7 +49,7 @@ const getRandomInt = (min, max) => {
   return Math.floor(result);
 };
 
-function createRandomIdFromRangeGenerator (min, max) {
+const createRandomIdFromRangeGenerator = (min, max) => {
   const previousValues = [];
 
   return function () {
@@ -63,7 +63,9 @@ function createRandomIdFromRangeGenerator (min, max) {
     previousValues.push(currentValue);
     return currentValue;
   };
-}
+};
+
+const getRandomArrayElement = (array) => array[getRandomInt(0, array.length - 1)];
 
 const generateUserId = createRandomIdFromRangeGenerator(MIN_ID, MAX_ID);
 const generatePhotoId = createRandomIdFromRangeGenerator(MIN_ID, MAX_ID);
@@ -76,8 +78,8 @@ const createComments = () => {
     const newComment = {};
     newComment.id = generateCommentId();
     newComment.avatar = `img/avatar-${getRandomInt(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`;
-    newComment.message = MESSAGES[getRandomInt(0, MESSAGES.length - 1)];
-    newComment.name = NAMES[getRandomInt(0, NAMES.length - 1)];
+    newComment.message = getRandomArrayElement(MESSAGES);
+    newComment.name = getRandomArrayElement(NAMES);
     newComments.push(newComment);
   }
   return newComments;
@@ -89,7 +91,7 @@ const createDescriptions = () => {
     const newObj = {};
     newObj.id = generateUserId();
     newObj.url = `photos/${generatePhotoId()}.jpg`;
-    newObj.description = DESCRIPTIONS[getRandomInt(0, DESCRIPTIONS.length - 1)];
+    newObj.description = getRandomArrayElement(DESCRIPTIONS);
     newObj.likes = getRandomInt(MIN_LIKES, MAX_LIKES);
     newObj.comments = createComments();
     photoDescriptions.push(newObj);
