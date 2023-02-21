@@ -32,32 +32,14 @@ extractDigits('1 кефир, 0.5 батона');
     Если «добивка» слишком длинная, она обрезается с конца.
 */
 
-const overflowTrim = (str, char, min) => {
-  const overflow = (str.length + char.length) - min;
-  const trimmedChar = char.slice(0, (char.length - overflow));
-  return trimmedChar;
+const padString = (str, min, char) => {
+  while (str.length < min) {
+    if (str.length + char.length > min) {
+      char = char.slice(0, min - str.length);
+    }
+    str = `${char}${str}`;
+  }
+  return str;
 };
 
-const padString = (str, min, additionalChar) => {
-  if (str.length >= min) {
-    return str;
-  }
-  if (str.length + additionalChar.length > min) {
-    const trimmedChar = overflowTrim(str, additionalChar, min);
-    return `${trimmedChar}${str}`;
-  }
-  if (str.length + additionalChar.length < min) {
-    const lack = min - (str.length + additionalChar.length);
-    if (lack === 1) {
-      return `${additionalChar[0]}${additionalChar}${str}`;
-    }
-    let charRepeat = additionalChar.repeat(lack + 1);
-    if (str.length + charRepeat.length > min) {
-      charRepeat = overflowTrim(str, charRepeat, min);
-    }
-    return `${charRepeat}${str}`;
-  }
-  return `${additionalChar}${str}`;
-};
-
-padString('string', 40, 'wow');
+padString('q', 4, 'we');
