@@ -75,11 +75,12 @@ const createComments = () => {
   const newComments = [];
   const commentsNumber = getRandomInt(MIN_COMMENTS_NUMBER, MAX_COMMENTS_NUMBER);
   for (let i = 1; i <= commentsNumber; i++) {
-    const newComment = {};
-    newComment.id = generateCommentId();
-    newComment.avatar = `img/avatar-${getRandomInt(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`;
-    newComment.message = getRandomArrayElement(MESSAGES);
-    newComment.name = getRandomArrayElement(NAMES);
+    const newComment = {
+      id: generateCommentId(),
+      avatar: `img/avatar-${getRandomInt(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`,
+      message: getRandomArrayElement(MESSAGES),
+      name:  getRandomArrayElement(NAMES),
+    };
     newComments.push(newComment);
   }
   return newComments;
@@ -88,12 +89,13 @@ const createComments = () => {
 const createDescriptions = () => {
   const photoDescriptions = [];
   for (let i = 1; i <= USERS_AMOUNT; i++) {
-    const newObj = {};
-    newObj.id = generateUserId();
-    newObj.url = `photos/${generatePhotoId()}.jpg`;
-    newObj.description = getRandomArrayElement(DESCRIPTIONS);
-    newObj.likes = getRandomInt(MIN_LIKES, MAX_LIKES);
-    newObj.comments = createComments();
+    const newObj = {
+      id: generateUserId(),
+      url: `photos/${generatePhotoId()}.jpg`,
+      description: getRandomArrayElement(DESCRIPTIONS),
+      likes: getRandomInt(MIN_LIKES, MAX_LIKES),
+      comments: createComments(),
+    };
     photoDescriptions.push(newObj);
   }
   return photoDescriptions;
