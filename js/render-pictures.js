@@ -8,24 +8,29 @@ const fragment = document.createDocumentFragment();
 const generatedPictures = generateDescriptions();
 
 // отображение миниатюр на странице
-const addPictures = (userData) => {
-// цикл: пройтись по всем сгенерированным объектам с данными о фото
-  userData.forEach((obj) => {
+const addPictures = () => {
+  generatedPictures.forEach((obj) => {
     //генерация фото-превью
     const newPicture = pictureTemplate.cloneNode(true); //
     newPicture.querySelector('.picture__img').src = obj.url;
     newPicture.querySelector('.picture__likes').textContent = obj.likes;
     newPicture.querySelector('.picture__comments').textContent = obj.comments.length;
-    // обработчик клика для открытия полноразмерного фото
-    const renderPhotoDetails = () => {
-      renderFullSize(obj);
-      renderComments(obj);
-    };
-    newPicture.addEventListener('click', renderPhotoDetails);
+    newPicture.dataset.id = obj.id;
     fragment.append(newPicture);
   });
   picturesContainer.append(fragment);
-  picturesContainer.addEventListener('click', openFullSize);
 };
 
-export {addPictures, generatedPictures};
+const onPictureListClick = (evt) => {
+  if (evt.target.closest('.picture')) {
+    openFullSize();
+    const currentElement = evt.target.closest('.picture');
+    const currentObject = generatedPictures.find((el) => el.id === Number(currentElement.dataset.id));
+    renderFullSize(currentObject);
+    renderComments(currentObject);
+  }
+};
+
+picturesContainer.addEventListener('click', onPictureListClick);
+
+export {addPictures};
