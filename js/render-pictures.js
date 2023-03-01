@@ -28,4 +28,4 @@ const addPictures = (userData) => {
   picturesContainer.addEventListener('click', openFullSize);
 };
 
-export {addPictures, picturesContainer, generatedPictures};
+export {addPictures, generatedPictures};
