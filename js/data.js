@@ -1,4 +1,4 @@
-import {getRandomInt, createRandomIdFromRangeGenerator, getRandomArrayElement} from './data-util.js';
+import {getRandomInt, createRandomIdFromRangeGenerator, getRandomArrayElement} from './util.js';
 
 const USERS_AMOUNT = 25;
 const MIN_ID = 1;
@@ -64,6 +64,7 @@ const createDescriptions = () => ({
   comments: generateComments(),
 });
 
+// функция создает массив объектов с данными по каждой фотке
 const generateDescriptions = () => Array.from({length: USERS_AMOUNT}, createDescriptions);
 
 

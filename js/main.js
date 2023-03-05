@@ -1,3 +1,3 @@
-import {addPictures} from './pictures.js';
+import {addPictures} from './render-pictures.js';
 
 addPictures();
