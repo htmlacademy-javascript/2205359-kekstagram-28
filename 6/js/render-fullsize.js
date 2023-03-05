@@ -1,16 +1,16 @@
 import {isEscapeKey} from './util.js';
 
-const BODY = document.querySelector('body');
-const BIG_PICTURE = BODY.querySelector('.big-picture');
-const BIG_PICTURE_IMG = BIG_PICTURE.querySelector('.big-picture__img');
-const LIKES = BIG_PICTURE.querySelector('.likes-count');
-const PICTURE_CAPTION = BIG_PICTURE.querySelector('.social__caption');
-const COMMENTS_COUNT = BIG_PICTURE.querySelector('.comments-count');
-const COMMENTS_LIST = BIG_PICTURE.querySelector('.social__comments');
-const COMMENT = COMMENTS_LIST.querySelector('.social__comment');
-const COMMENTS_COUNTER = BIG_PICTURE.querySelector('.social__comment-count');
-const COMMENTS_LOADER = BIG_PICTURE.querySelector('.comments-loader');
-const CLOSE_BTN = BIG_PICTURE.querySelector('.big-picture__cancel');
+const body = document.querySelector('body');
+const fullPicture = body.querySelector('.big-picture');
+const fullPictureImg = fullPicture.querySelector('.big-picture__img');
+const likes = fullPicture.querySelector('.likes-count');
+const fullPictureCaption = fullPicture.querySelector('.social__caption');
+const commentsCount = fullPicture.querySelector('.comments-count');
+const commentsCounter = fullPicture.querySelector('.social__comment-count');
+const commentsLoader = fullPicture.querySelector('.comments-loader');
+const closeBtn = fullPicture.querySelector('.big-picture__cancel');
+const commentsList = fullPicture.querySelector('.social__comments');
+const comment = commentsList.querySelector('.social__comment');
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -19,44 +19,40 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-// делегирование общих событий по открытию превью
-const openFullSize = (evt) => {
-  evt.preventDefault();
-  if (evt.target.closest('.picture')) {
-    BIG_PICTURE.classList.remove('hidden');
-    BODY.classList.add('modal-open');
-    COMMENTS_COUNTER.classList.add('hidden');
-    COMMENTS_LOADER.classList.add('hidden');
-    CLOSE_BTN.addEventListener('click', closeFullSize);
-    document.addEventListener('keydown', onDocumentKeydown);
-  }
+const openFullSize = () => {
+  fullPicture.classList.remove('hidden');
+  body.classList.add('modal-open');
+  commentsCounter.classList.add('hidden');
+  commentsLoader.classList.add('hidden');
+  closeBtn.addEventListener('click', closeFullSize);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
-// генерация инфы по каждому фото
+// генерация информации по каждому фото
 const renderFullSize = (obj) => {
-  BIG_PICTURE_IMG.querySelector('img').src = obj.url;
-  LIKES.textContent = obj.likes;
-  COMMENTS_COUNT.textContent = obj.comments.length;
-  PICTURE_CAPTION.textContent = obj.description;
+  fullPictureImg.querySelector('img').src = obj.url;
+  likes.textContent = obj.likes;
+  commentsCount.textContent = obj.comments.length;
+  fullPictureCaption.textContent = obj.description;
 };
 
 // генерация комментариев
 const renderComments = (obj) => {
-  COMMENTS_LIST.innerHTML = '';
-  obj.comments.forEach((comment) => {
-    const newComment = COMMENT.cloneNode(true);
-    newComment.querySelector('.social__picture').src = comment.avatar;
-    newComment.querySelector('.social__picture').alt = comment.name;
-    newComment.querySelector('.social__text').textContent = comment.message;
-    COMMENTS_LIST.append(newComment);
+  commentsList.innerHTML = '';
+  obj.comments.forEach((comm) => {
+    const newComment = comment.cloneNode(true);
+    newComment.querySelector('.social__picture').src = comm.avatar;
+    newComment.querySelector('.social__picture').alt = comm.name;
+    newComment.querySelector('.social__text').textContent = comm.message;
+    commentsList.append(newComment);
   });
 };
 
 function closeFullSize (evt) {
   evt.preventDefault();
-  BIG_PICTURE.classList.add('hidden');
-  BODY.classList.remove('modal-open');
-  CLOSE_BTN.removeEventListener('click', closeFullSize);
+  fullPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+  closeBtn.removeEventListener('click', closeFullSize);
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
