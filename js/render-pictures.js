@@ -35,6 +35,10 @@ const onPictureListClick = (evt) => {
     const comments = currentObject.comments;
     addedComments = addedComments.concat(comments);
     addComments(comments);
+    if (commentsList.children.length === currentObject.comments.length) {
+      commentsLoader.classList.add('hidden');
+      addedComments = [];
+    }
   }
 };
 
