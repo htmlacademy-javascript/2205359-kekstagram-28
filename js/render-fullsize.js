@@ -1,4 +1,5 @@
 import {isEscapeKey} from './util.js';
+import {onLoaderClick, commentsCounter} from './render-pictures.js';
 
 const body = document.querySelector('body');
 const fullPicture = body.querySelector('.big-picture');
@@ -6,11 +7,12 @@ const fullPictureImg = fullPicture.querySelector('.big-picture__img');
 const likes = fullPicture.querySelector('.likes-count');
 const fullPictureCaption = fullPicture.querySelector('.social__caption');
 const commentsCount = fullPicture.querySelector('.comments-count');
-const commentsCounter = fullPicture.querySelector('.social__comment-count');
 const commentsLoader = fullPicture.querySelector('.comments-loader');
 const closeBtn = fullPicture.querySelector('.big-picture__cancel');
 const commentsList = fullPicture.querySelector('.social__comments');
 const comment = commentsList.querySelector('.social__comment');
+
+let commentsStep = 5;
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -22,10 +24,9 @@ const onDocumentKeydown = (evt) => {
 const openFullSize = () => {
   fullPicture.classList.remove('hidden');
   body.classList.add('modal-open');
-  commentsCounter.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
   closeBtn.addEventListener('click', closeFullSize);
   document.addEventListener('keydown', onDocumentKeydown);
+  commentsLoader.addEventListener('click', onLoaderClick);
 };
 
 // генерация информации по каждому фото
@@ -33,13 +34,14 @@ const renderFullSize = (obj) => {
   fullPictureImg.querySelector('img').src = obj.url;
   likes.textContent = obj.likes;
   commentsCount.textContent = obj.comments.length;
+  commentsCounter.innerHTML = `${commentsStep} из <span class="comments-count">${obj.comments.length}</span> комментариев`;
   fullPictureCaption.textContent = obj.description;
 };
 
+
 // генерация комментариев
-const renderComments = (obj) => {
-  commentsList.innerHTML = '';
-  obj.comments.forEach((comm) => {
+const renderComments = (commentsArray) => {
+  commentsArray.forEach((comm) => {
     const newComment = comment.cloneNode(true);
     newComment.querySelector('.social__picture').src = comm.avatar;
     newComment.querySelector('.social__picture').alt = comm.name;
@@ -48,12 +50,27 @@ const renderComments = (obj) => {
   });
 };
 
+const addComments = (commentsArray) => {
+  commentsList.innerHTML = '';
+  const commentsToAdd = commentsArray.slice(0, commentsStep);
+  renderComments(commentsToAdd);
+};
+
+const loadComments = (obj) => {
+  commentsStep += 5;
+  renderComments(obj.slice(commentsList.children.length, commentsStep));
+};
+
 function closeFullSize (evt) {
   evt.preventDefault();
   fullPicture.classList.add('hidden');
   body.classList.remove('modal-open');
   closeBtn.removeEventListener('click', closeFullSize);
   document.removeEventListener('keydown', onDocumentKeydown);
+  commentsStep = 5;
+  commentsLoader.removeEventListener('click', onLoaderClick);
+  commentsLoader.classList.remove('hidden');
+  commentsCounter.innerHTML = '';
 }
 
-export {openFullSize, renderFullSize, renderComments};
+export {openFullSize, renderFullSize, addComments, loadComments, commentsList};
