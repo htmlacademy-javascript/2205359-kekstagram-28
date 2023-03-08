@@ -34,7 +34,6 @@ const renderFullSize = (obj) => {
   fullPictureImg.querySelector('img').src = obj.url;
   likes.textContent = obj.likes;
   commentsCount.textContent = obj.comments.length;
-  commentsCounter.innerHTML = `${commentsStep} из <span class="comments-count">${obj.comments.length}</span> комментариев`;
   fullPictureCaption.textContent = obj.description;
 };
 

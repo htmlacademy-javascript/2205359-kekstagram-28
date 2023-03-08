@@ -39,6 +39,7 @@ const onPictureListClick = (evt) => {
       commentsLoader.classList.add('hidden');
       addedComments = [];
     }
+    commentsCounter.innerHTML = `${commentsList.children.length} из <span class="comments-count">${currentObject.comments.length}</span> комментариев`;
   }
 };
 
