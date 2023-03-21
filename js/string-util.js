@@ -30,4 +30,4 @@ const padString = (str, min, char) => {
 
 padString('q', 4, 'we');
 
-export {checkStringLength};
+export {checkStringLength, extractDigits};

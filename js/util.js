@@ -27,4 +27,5 @@ const getRandomArrayElement = (array) => array[getRandomInt(0, array.length - 1)
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const findDuplicates = (arr) => arr.filter((item, index) => arr.indexOf(item) !== index);
+
 export {getRandomInt, createRandomIdFromRangeGenerator, getRandomArrayElement, isEscapeKey, findDuplicates};
