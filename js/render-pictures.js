@@ -1,7 +1,6 @@
 import {openFullSize, renderFullSize, addComments, loadComments, commentsList} from './render-fullsize.js';
 import {generateDescriptions} from './data.js';
 
-
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const fragment = document.createDocumentFragment();
