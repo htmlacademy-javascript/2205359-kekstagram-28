@@ -64,6 +64,7 @@ const createSlider = () => {
       max: 100,
     },
     start: 100,
+    connect: 'lower',
   });
 };
 
