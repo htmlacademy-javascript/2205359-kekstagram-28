@@ -19,12 +19,11 @@ const effectsList = uploadForm.querySelector('.effects__list');
 const onScaleControlsClick = (evt) => {
   if (evt.target.closest('.scale__control--smaller') && extractDigits(scaleControlValue.value) > MIN_SCALE_AMOUNT) {
     scaleControlValue.value = `${extractDigits(scaleControlValue.value) - SCALE_STEP}%`;
-    imgUploadPrewiev.style.transform = `scale(${extractDigits(scaleControlValue.value) / 100})`;
   }
   if (evt.target.closest('.scale__control--bigger') && extractDigits(scaleControlValue.value) < MAX_SCALE_AMOUNT) {
     scaleControlValue.value = `${extractDigits(scaleControlValue.value) + SCALE_STEP}%`;
-    imgUploadPrewiev.style.transform = `scale(${extractDigits(scaleControlValue.value) / 100})`;
   }
+  imgUploadPrewiev.style.transform = `scale(${extractDigits(scaleControlValue.value) / 100})`;
 };
 
 const onFormSubmit = (evt) => validateForm() ? imgUploadClose() : evt.preventDefault();
