@@ -1,6 +1,8 @@
 import {validateForm} from './validate-form.js';
 import { extractDigits } from './string-util.js';
 import {sliderFieldset, createSlider, onEffectsListClick, destroySlider} from './form-sliders.js';
+import { sendData } from './server-data.js';
+import {showErrorAlert, showSuccessAlert} from './notifications.js';
 
 const MIN_SCALE_AMOUNT = 25;
 const MAX_SCALE_AMOUNT = 100;
@@ -15,6 +17,7 @@ const scaleControls = uploadForm.querySelector('.img-upload__scale');
 const imgUploadContainer = uploadForm.querySelector('.img-upload__preview');
 const imgUploadPrewiev = imgUploadContainer.querySelector('img');
 const effectsList = uploadForm.querySelector('.effects__list');
+const submitButton = uploadForm.querySelector('.img-upload__submit');
 
 const onScaleControlsClick = (evt) => {
   if (evt.target.closest('.scale__control--smaller') && extractDigits(scaleControlValue.value) > MIN_SCALE_AMOUNT) {
@@ -26,10 +29,42 @@ const onScaleControlsClick = (evt) => {
   imgUploadPrewiev.style.transform = `scale(${extractDigits(scaleControlValue.value) / 100})`;
 };
 
-const onFormSubmit = (evt) => validateForm() ? imgUploadClose() : evt.preventDefault();
+const resetForm = () => {
+  uploadForm.reset();
+  imgUploadPrewiev.style.transform = 'scale(1)';
+  imgUploadPrewiev.style.filter = '';
+  imgUploadPrewiev.removeAttribute('class');
+};
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  const isValid = validateForm();
+  if (isValid) {
+    blockSubmitButton();
+    sendData(new FormData(evt.target))
+      .then(resetForm())
+      .then(imgUploadClose())
+      .then(showSuccessAlert())
+      .catch(
+        () => {
+          showErrorAlert();
+        }
+      )
+      .finally(unblockSubmitButton);
+  }
+};
 
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape' && !evt.target.closest('.text__hashtags') && !evt.target.closest ('.text__description')) {
+    resetForm();
     imgUploadClose();
   }
 };
