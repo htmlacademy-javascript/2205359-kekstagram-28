@@ -46,19 +46,18 @@ const unblockSubmitButton = () => {
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
-  const isValid = validateForm();
-  if (isValid) {
+  if (validateForm()) {
     blockSubmitButton();
     sendData(new FormData(evt.target))
-      .then(resetForm())
       .then(imgUploadClose())
+      .then(resetForm())
       .then(showSuccessAlert())
-      .catch(
-        () => {
-          showErrorAlert();
-        }
+      .catch(() => {
+        imgUploadClose();
+        showErrorAlert();
+      }
       )
-      .finally(unblockSubmitButton);
+      .finally(unblockSubmitButton());
   }
 };
 
