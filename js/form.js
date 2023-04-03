@@ -84,10 +84,6 @@ function onImageUpload () {
 function imgUploadClose () {
   document.body.classList.remove('modal-open');
   uploadOverlay.classList.add('hidden');
-  uploadForm.reset();
-  imgUploadPrewiev.style.transform = 'scale(1)';
-  imgUploadPrewiev.style.filter = '';
-  imgUploadPrewiev.removeAttribute('class');
   destroySlider();
   scaleControls.removeEventListener('click', onScaleControlsClick);
   effectsList.removeEventListener('change', onEffectsListClick);
