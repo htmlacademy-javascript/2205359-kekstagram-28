@@ -26,7 +26,7 @@ const showAlert = (message) => {
 };
 
 const getPictures = () => {
-  getData
+  getData()
     .then((response) => addPictures(response))
     .catch((err) => showAlert(err.message));
 };
