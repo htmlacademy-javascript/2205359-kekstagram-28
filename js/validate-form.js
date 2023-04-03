@@ -6,12 +6,11 @@ const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAG_AMOUNT = 5;
 const MAX_HASHTAG_LENGTH = 20;
 
-
 const uploadForm = document.querySelector('.img-upload__form');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
 
-const testHashtag = (value) => HASHTAG_REGEXP.test(value);
+const testHashtag = (value) => HASHTAG_REGEXP.test(value) || value === '';
 
 const prepareHashtagValue = (str) => str.trim().split(' ');
 

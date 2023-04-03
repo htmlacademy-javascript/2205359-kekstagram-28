@@ -40,7 +40,6 @@ const addPictures = (data) => {
   });
   picturesContainer.append(fragment);
   picturesContainer.addEventListener('click', (evt) => {
-    evt.preventDefault();
     onPictureListClick(evt, data);
   });
 };

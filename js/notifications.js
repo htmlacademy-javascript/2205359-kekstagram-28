@@ -1,36 +1,49 @@
 const errorTemplate = document.querySelector('#error').content;
 const successTemplate = document.querySelector('#success').content;
-const successSection = document.querySelector('.success');
-const errorSection = document.querySelector('.error');
 
 const onOverlayKeydown = (evt) => {
   if (evt.key === 'Escape') {
-    closeAlert();
+    closeMessage();
   }
 };
 
-function closeAlert () {
-  if (successSection) {
-    successSection.remove();
+const onOverlayClick = (evt) => {
+  if (!evt.target.closest('.success__inner') && !evt.target.closest('.error__inner')) {
+    closeMessage();
   }
-  if (errorSection) {
-    errorSection.remove();
-  }
-  document.removeEventListener('keydown', onOverlayKeydown);
-}
+};
+
+const onAlertButtonClick = () => closeMessage();
 
 const showUploadAlert = (template) => {
   const newAlert = template.cloneNode(true);
-  newAlert.querySelector('button').addEventListener('click', closeAlert);
-  newAlert.querySelector('div').addEventListener('click', closeAlert);
-  document.addEventListener('keydown', onOverlayKeydown);
   document.body.append(newAlert);
 };
 
-const showSuccessAlert = () => showUploadAlert(successTemplate);
+const showSuccessAlert = () => {
+  showUploadAlert(successTemplate);
+  document.querySelector('.success__button').focus();
+  document.querySelector('.success__button').addEventListener('click', onAlertButtonClick);
+  document.querySelector('.success').addEventListener('click', onOverlayClick);
+  document.addEventListener('keydown', onOverlayKeydown);
+};
 
+const showErrorAlert = () => {
+  showUploadAlert(errorTemplate);
+  document.querySelector('.error__button').addEventListener('click', onAlertButtonClick);
+  document.querySelector('.error').addEventListener('click', onOverlayClick);
+  document.addEventListener('keydown', onOverlayKeydown);
+};
 
-const showErrorAlert = () => showUploadAlert(errorTemplate);
+function closeMessage() {
+  if (document.querySelector('.success')) {
+    document.querySelector('.success').remove();
+  }
+  if (document.querySelector('.error')) {
+    document.querySelector('.error').remove();
+  }
+  document.removeEventListener('keydown', onOverlayKeydown);
+}
 
 
 export {showErrorAlert, showSuccessAlert};

@@ -49,15 +49,16 @@ const onFormSubmit = (evt) => {
   if (validateForm()) {
     blockSubmitButton();
     sendData(new FormData(evt.target))
-      .then(imgUploadClose())
-      .then(resetForm())
-      .then(showSuccessAlert())
+      .then(() => {
+        imgUploadClose();
+        resetForm();
+        showSuccessAlert();
+      })
       .catch(() => {
         imgUploadClose();
         showErrorAlert();
-      }
-      )
-      .finally(unblockSubmitButton());
+      })
+      .finally(unblockSubmitButton);
   }
 };
 
