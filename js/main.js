@@ -1,5 +1,4 @@
+import { getPictures } from './get-data.js';
 import './form.js';
-import {addPictures} from './render-pictures.js';
 
-
-addPictures();
+getPictures();
