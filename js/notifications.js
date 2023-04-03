@@ -3,17 +3,17 @@ const successTemplate = document.querySelector('#success').content;
 
 const onOverlayKeydown = (evt) => {
   if (evt.key === 'Escape') {
-    closeMessage();
+    closeAlert();
   }
 };
 
 const onOverlayClick = (evt) => {
   if (!evt.target.closest('.success__inner') && !evt.target.closest('.error__inner')) {
-    closeMessage();
+    closeAlert();
   }
 };
 
-const onAlertButtonClick = () => closeMessage();
+const onAlertButtonClick = () => closeAlert();
 
 const showUploadAlert = (template) => {
   const newAlert = template.cloneNode(true);
@@ -35,7 +35,7 @@ const showErrorAlert = () => {
   document.addEventListener('keydown', onOverlayKeydown);
 };
 
-function closeMessage() {
+function closeAlert() {
   if (document.querySelector('.success')) {
     document.querySelector('.success').remove();
   }
