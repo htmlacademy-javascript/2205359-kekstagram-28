@@ -99,6 +99,7 @@ const getSliderValue = (effect) => {
 
 const onEffectsListClick = (evt) => {
   if (evt.target.closest('.effects__radio')) {
+    sliderValue.value = 1;
     imgUploadPrewiev.removeAttribute('class');
     imgUploadPrewiev.style = '';
     imgUploadPrewiev.classList.add(`effects__preview--${evt.target.value}`);
