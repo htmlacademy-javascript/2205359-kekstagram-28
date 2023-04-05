@@ -7,6 +7,7 @@ import {showErrorAlert, showSuccessAlert} from './notifications.js';
 const MIN_SCALE_AMOUNT = 25;
 const MAX_SCALE_AMOUNT = 100;
 const SCALE_STEP = 25;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
@@ -69,15 +70,26 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const uploadFile = () => {
+  const file = imgUploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    imgUploadPrewiev.src = URL.createObjectURL(file);
+  }
+};
+
 function onImageUpload () {
   document.body.classList.add('modal-open');
   uploadOverlay.classList.remove('hidden');
   sliderFieldset.classList.add('hidden');
   createSlider();
+  uploadFile();
   scaleControls.addEventListener('click', onScaleControlsClick);
   effectsList.addEventListener('change', onEffectsListClick);
   uploadForm.addEventListener('submit', onFormSubmit);
   closeFormBtn.addEventListener('click', imgUploadClose);
+  closeFormBtn.addEventListener('click', resetForm);
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
