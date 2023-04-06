@@ -1,3 +1,5 @@
+import { isEscapeKey } from './util.js';
+
 const ALERT_SHOW_TIME = 5000;
 const errorTemplate = document.querySelector('#error').content;
 const successTemplate = document.querySelector('#success').content;
@@ -25,7 +27,7 @@ const showAlert = (message) => {
 };
 
 const onOverlayKeydown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     closeAlert();
   }
 };

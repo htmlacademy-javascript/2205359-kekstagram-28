@@ -3,6 +3,7 @@ import { extractDigits } from './string-util.js';
 import {sliderFieldset, createSlider, onEffectsListClick, destroySlider} from './form-sliders.js';
 import { sendData } from './server-data.js';
 import {showErrorAlert, showSuccessAlert} from './notifications.js';
+import { isEscapeKey } from './util.js';
 
 const MIN_SCALE_AMOUNT = 25;
 const MAX_SCALE_AMOUNT = 100;
@@ -56,7 +57,6 @@ const onFormSubmit = (evt) => {
         showSuccessAlert();
       })
       .catch(() => {
-        imgUploadClose();
         showErrorAlert();
       })
       .finally(unblockSubmitButton);
@@ -64,7 +64,7 @@ const onFormSubmit = (evt) => {
 };
 
 const onDocumentKeydown = (evt) => {
-  if (evt.key === 'Escape' && !evt.target.closest('.text__hashtags') && !evt.target.closest ('.text__description')) {
+  if (isEscapeKey(evt) && !evt.target.closest('.text__hashtags') && !evt.target.closest ('.text__description')) {
     resetForm();
     imgUploadClose();
   }
