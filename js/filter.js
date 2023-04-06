@@ -28,20 +28,20 @@ const filterPictures = (evt, data, cb) => {
   if (evt.target.id === 'filter-random') {
     dataCopy = shufflePhotos(dataCopy.slice(0, SHUFFLED_COUNT));
   }
-  if(evt.target.id === 'filter-default') {
-    cb(data);
-    return;
-  }
   cb(dataCopy);
 };
 
 const setFilterClick = debounce((evt, data, cb) => filterPictures(evt, data, cb), RERENDER_DELAY);
 
+const filter = (evt, data, cb) => {
+  onFiltersListClick(evt);
+  setFilterClick(evt, data, cb);
+};
+
 const addFilterListeners = (data, cb) => {
   setUpFilter();
   imgFilters.addEventListener('click', (evt) => {
-    onFiltersListClick(evt);
-    setFilterClick(evt, data, cb);
+    filter(evt, data, cb);
   });
 };
 

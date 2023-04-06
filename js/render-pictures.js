@@ -16,6 +16,7 @@ const onPictureListClick = (evt, data) => {
     const currentElement = evt.target.closest('.picture');
     const currentObject = data.find((el) => el.id === Number(currentElement.dataset.id));
     renderFullSize(currentObject);
+    addedComments = [];
     const comments = currentObject.comments;
     addedComments = addedComments.concat(comments);
     addComments(comments);
@@ -31,7 +32,7 @@ const onPictureListClick = (evt, data) => {
 const addPictures = (data) => {
   data.forEach((obj) => {
     //генерация фото-превью
-    const newPicture = pictureTemplate.cloneNode(true); //
+    const newPicture = pictureTemplate.cloneNode(true);
     newPicture.querySelector('.picture__img').src = obj.url;
     newPicture.querySelector('.picture__likes').textContent = obj.likes;
     newPicture.querySelector('.picture__comments').textContent = obj.comments.length;
