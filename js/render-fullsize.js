@@ -21,10 +21,12 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const onCloseBtnClick = (evt) => closeFullSize(evt);
+
 const openFullSize = () => {
   fullPicture.classList.remove('hidden');
   body.classList.add('modal-open');
-  closeBtn.addEventListener('click', closeFullSize);
+  closeBtn.addEventListener('click', onCloseBtnClick);
   document.addEventListener('keydown', onDocumentKeydown);
   commentsLoader.addEventListener('click', onLoaderClick);
 };
@@ -64,7 +66,7 @@ function closeFullSize (evt) {
   evt.preventDefault();
   fullPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-  closeBtn.removeEventListener('click', closeFullSize);
+  closeBtn.removeEventListener('click', onCloseBtnClick);
   document.removeEventListener('keydown', onDocumentKeydown);
   commentsStep = 5;
   commentsLoader.removeEventListener('click', onLoaderClick);
