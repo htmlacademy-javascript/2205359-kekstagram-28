@@ -11,7 +11,7 @@ const shufflePhotos = (data) => shuffleArray(data);
 
 const setUpFilter = () => imgFilters.classList.remove('img-filters--inactive');
 
-const onFiltersListClick = (evt) => {
+const changeFilters = (evt) => {
   if (evt.target.closest('.img-filters__button') && !evt.target.closest('.img-filters__button--active')) {
     document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
     evt.target.classList.add('img-filters__button--active');
@@ -33,15 +33,15 @@ const filterPictures = (evt, data, cb) => {
 
 const setFilterClick = debounce((evt, data, cb) => filterPictures(evt, data, cb), RERENDER_DELAY);
 
-const filter = (evt, data, cb) => {
-  onFiltersListClick(evt);
+const onFilterListClick = (evt, data, cb) => {
+  changeFilters(evt);
   setFilterClick(evt, data, cb);
 };
 
 const addFilterListeners = (data, cb) => {
   setUpFilter();
   imgFilters.addEventListener('click', (evt) => {
-    filter(evt, data, cb);
+    onFilterListClick(evt, data, cb);
   });
 };
 
