@@ -65,9 +65,12 @@ const onFormSubmit = (evt) => {
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt) && !evt.target.closest('.text__hashtags') && !evt.target.closest ('.text__description')) {
-    resetForm();
     imgUploadClose();
   }
+};
+
+const onCloseFormBtnClick = () => {
+  imgUploadClose();
 };
 
 const uploadFile = () => {
@@ -88,19 +91,19 @@ function onImageUpload () {
   scaleControls.addEventListener('click', onScaleControlsClick);
   effectsList.addEventListener('change', onEffectsListClick);
   uploadForm.addEventListener('submit', onFormSubmit);
-  closeFormBtn.addEventListener('click', imgUploadClose);
-  closeFormBtn.addEventListener('click', resetForm);
+  closeFormBtn.addEventListener('click', onCloseFormBtnClick);
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
 function imgUploadClose () {
   document.body.classList.remove('modal-open');
   uploadOverlay.classList.add('hidden');
+  resetForm();
   destroySlider();
   scaleControls.removeEventListener('click', onScaleControlsClick);
   effectsList.removeEventListener('change', onEffectsListClick);
   uploadForm.removeEventListener('submit', onFormSubmit);
-  closeFormBtn.removeEventListener('click', imgUploadClose);
+  closeFormBtn.removeEventListener('click', onCloseFormBtnClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
