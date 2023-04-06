@@ -7,7 +7,12 @@ const imgFilters = document.querySelector('.img-filters');
 
 const compareCommentsLength = (first, second) => second.comments.length - first.comments.length;
 
-const shufflePhotos = (data) => shuffleArray(data);
+const sortByComments = (data) => {
+  const dataCopy = data.slice();
+  return dataCopy.sort(compareCommentsLength);
+};
+
+const shufflePhotos = (data) => shuffleArray(data.slice(0, SHUFFLED_COUNT));
 
 const setUpFilter = () => imgFilters.classList.remove('img-filters--inactive');
 
@@ -21,14 +26,14 @@ const changeFilters = (evt) => {
 const filterPictures = (evt, data, cb) => {
   const photos = document.querySelectorAll('.picture');
   photos.forEach((el) => el.remove());
-  let dataCopy = data.slice();
-  if(evt.target.id === 'filter-discussed') {
-    dataCopy.sort(compareCommentsLength);
+  switch(evt.target.id) {
+    case 'filter-discussed':
+      return cb(sortByComments(data));
+    case 'filter-random':
+      return cb(shufflePhotos(data));
+    case 'filter-default':
+      return cb(data);
   }
-  if (evt.target.id === 'filter-random') {
-    dataCopy = shufflePhotos(dataCopy.slice(0, SHUFFLED_COUNT));
-  }
-  cb(dataCopy);
 };
 
 const setFilterClick = debounce((evt, data, cb) => filterPictures(evt, data, cb), RERENDER_DELAY);
